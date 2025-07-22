@@ -54,7 +54,7 @@ nav ul li a {
     padding: 8px 12px;
     transition: background 0.3s;
     }
-nav ul li a:hover {
+nav ul li a.active {
   border-bottom: 3px solid #ffffff;
 }
 
