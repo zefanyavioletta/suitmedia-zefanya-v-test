@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Suitmedia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header id="header">
+  <div class="container">
+    <div class="logo">
+      <a href="#">
+        <img src="https://raw.githubusercontent.com/violetsareblue97/suitmedia-zefanya-v-test/refs/heads/main/logosuitmedia.png" alt="Suitmedia Logo" class="logo-img" />
+      </a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/work.html" class="nav-link" id="menu-work">Work</a></li>
+        <li><a href="/about.html" class="nav-link" id="menu-about">About</a></li>
+        <li><a href="/services.html" class="nav-link" id="menu-work">Services</a></li>
+        <li><a href="/" class="nav-link" id="menu-ideas">Ideas</a></li>
+        <li><a href="/careers" class="nav-link" id="menu-about">Careers</a></li>
+        <li><a href="/contacts" class="nav-link" id="menu-about">Contacts</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section id="banner">
+  <div class="banner-image-container">
+    <img src="https://raw.githubusercontent.com/zefanyavioletta/suitmedia-zefanya-v-test/refs/heads/main/banner.png" />
+  </div>
+  <div class="banner-text">
+    <h1>Ideas</h1>
+    <p>Where all our great things begin</p>
+  </div>
+</section>
+
+<section class="controls container">
+  <div>
+    <label for="sortBy">Sort By:</label>
+    <select id="sortBy">
+      <option value="desc">Terbaru</option>
+      <option value="asc">Terlama</option>
+    </select>
+  </div>
+  <div>
+    <label for="perPage">Items per page:</label>
+    <select id="perPage">
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+    </select>
+  </div>
+</section>
+
+<section id="posts" class="container">
+  <div id="postsGrid" class="grid"></div>
+</section>
+
+<div class="pagination" id="pagination"></div>
+
+  
+<script src="main.js"></script>
+</body>
+</html>
