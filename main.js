@@ -1,4 +1,3 @@
-// Header hide/show
 let lastScrollTop = 0;
 const header = document.getElementById('header');
 
@@ -6,24 +5,21 @@ window.addEventListener('scroll', () => {
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
   if (scrollTop > lastScrollTop) {
-    // scroll ke bawah
     header.classList.add('hidden');
     header.classList.remove('show');
   } else {
-    // scroll ke atas
     header.classList.remove('hidden');
     header.classList.add('show');
   }
   lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 
-  // Efek parallax banner
+  //parallax
   const image = document.querySelector('.banner-image');
   if (image) {
     image.style.transform = `translateY(${scrollTop * 0.5}px)`;
   }
 });
 
-// Aktifkan menu sesuai halaman
 document.querySelectorAll('.nav-link').forEach(link => {
   if (link.getAttribute('href') === window.location.pathname || 
       (window.location.pathname === '/' && link.getAttribute('href') === '#')) {
@@ -33,7 +29,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
   }
 });
 
-// API dan rendering data
+// API suitmedia
 const grid = document.getElementById('postsGrid');
 const paginationContainer = document.getElementById('pagination');
 const sortSelect = document.getElementById('sortBy');
@@ -42,7 +38,6 @@ const perPageSelect = document.getElementById('perPage');
 let currentPage = 1;
 let currentSortOrder = 'desc';
 
-// Fungsi utama untuk memuat data dari API
 async function loadPosts(page = 1, sortOrder = 'desc') {
   const perPage = perPageSelect ? perPageSelect.value : 10;
   const apiUrl = `https://suitmedia-backend.suitdev.com/api/ideas?page[number]=${page}&page[size]=${perPage}&sort=${sortOrder === 'desc' ? '-published_at' : 'published_at'}`;
@@ -61,7 +56,6 @@ async function loadPosts(page = 1, sortOrder = 'desc') {
 
     const json = await resp.json();
 
-    // Simpan state
     currentPage = page;
     currentSortOrder = sortOrder;
 
@@ -72,7 +66,7 @@ async function loadPosts(page = 1, sortOrder = 'desc') {
   }
 }
 
-// Fungsi untuk menampilkan data ke grid
+
 function renderPosts(posts) {
   grid.innerHTML = '';
 
@@ -109,7 +103,8 @@ function renderPosts(posts) {
   });
 }
 
-// Fungsi untuk menampilkan pagination
+
+//pagination
 function renderPagination(totalItems) {
   if (!paginationContainer) return;
   paginationContainer.innerHTML = '';
@@ -128,22 +123,22 @@ function renderPagination(totalItems) {
   }
 }
 
-// Event listeners
+
 window.addEventListener('DOMContentLoaded', () => {
-  // Load data awal
+
   loadPosts();
 
-  // Event untuk sort
+  //sort
   if (sortSelect) {
-    sortSelect.value = 'desc'; // default
+    sortSelect.value = 'desc';
     sortSelect.addEventListener('change', () => {
       loadPosts(1, sortSelect.value);
     });
   }
 
-  // Event untuk show per page
+  //page select
   if (perPageSelect) {
-    perPageSelect.value = '10'; // default
+    perPageSelect.value = '10';
     perPageSelect.addEventListener('change', () => {
       loadPosts(1, currentSortOrder);
     });
