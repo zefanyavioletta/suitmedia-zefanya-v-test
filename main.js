@@ -162,13 +162,12 @@ window.addEventListener('DOMContentLoaded', () => {
   loadPosts(savedState.page, savedState.sortOrder);
 });
 
+//untuk white line tombol navbar
 const navLinks = document.querySelectorAll('.nav-link');
 
 navLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
+  link.addEventListener('click', () => {
     navLinks.forEach(l => l.classList.remove('active'));
     link.classList.add('active');
-    window.location.href = link.href;
   });
 });
