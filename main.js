@@ -163,23 +163,22 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
 const navLinks = document.querySelectorAll('.nav-link');
 
 navLinks.forEach(link => {
   link.addEventListener('click', () => {
     navLinks.forEach(l => l.classList.remove('active'));
     link.classList.add('active');
-
-
-    localStorage.setItem('activeNav', link.getAttribute('href'));
+    localStorage.setItem('activeMenu', link.getAttribute('href'));
   });
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-  const lastActive = localStorage.getItem('activeNav');
-  if (lastActive) {
+  const activeHref = localStorage.getItem('activeMenu');
+  if (activeHref) {
     navLinks.forEach(link => {
-      if (link.getAttribute('href') === lastActive) {
+      if (link.getAttribute('href') === activeHref) {
         link.classList.add('active');
       }
     });
