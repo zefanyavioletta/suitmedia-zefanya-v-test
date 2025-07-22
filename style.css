@@ -6,14 +6,14 @@
     line-height: 1.4;
 }
 
-/* Container umum untuk layout */
+
 .container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* 1. Header */
+
 header {
     position: fixed;
     top: 0;
@@ -32,18 +32,17 @@ header.hidden {
 
 header .container {
     display: flex;
-    align-items: center;  /* Menyelaraskan elemen di tengah secara vertikal */
-    justify-content: space-between; /* Menjaga ruang antara logo dan navbar */
+    align-items: center;
+    justify-content: space-between;
     height: 60px;
 }
 
 .logo-img {
-    width: 120px; /* Mengatur lebar logo sesuai kebutuhan */
+    width: 120px;
     height: auto;
-    flex: 0 0 auto; /* Agar logo tetap berada di kiri dan tidak meluas */
+    flex: 0 0 auto;
 }
 
-/* Navbar */
 nav ul {
     list-style: none;
     display: flex;
@@ -56,19 +55,15 @@ nav ul li a {
     transition: background 0.3s;
     }
 nav ul li a.active {
-    font-weight: bold;
-    color: #ffffff;
-}
-nav ul li a:hover {
-    background-color: #0000001a;
-    border-radius: 4px;
+  border-bottom: 3px solid #ffffff;
+  transition: border-bottom 0.3s;
 }
 
-/* Banner */
+
 #banner {
     position: relative;
     height: 400px;
-    margin-top: 60px; /* agar tidak tertutup header */
+    margin-top: 60px;
     overflow: hidden;
 }
 .banner-image-container {
@@ -105,7 +100,6 @@ nav ul li a:hover {
     top: 0;
 }
 
-/* Controls */
 .controls {
     display: flex;
     justify-content: center;
@@ -116,7 +110,6 @@ nav ul li a:hover {
      margin-right: 8px;
 }
 
-/* Grid Posts */
 #postsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -146,7 +139,6 @@ nav ul li a:hover {
     color: #555555;
 }
 
-/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
