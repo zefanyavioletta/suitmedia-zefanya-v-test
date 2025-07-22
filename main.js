@@ -1,3 +1,4 @@
+//posisi navbar saat halaman di scroll
 let lastScrollTop = 0;
 const header = document.getElementById('header');
 
@@ -20,6 +21,8 @@ window.addEventListener('scroll', () => {
   }
 });
 
+
+
 document.querySelectorAll('.nav-link').forEach(link => {
   if (link.getAttribute('href') === window.location.pathname || 
       (window.location.pathname === '/' && link.getAttribute('href') === '#')) {
@@ -29,7 +32,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
   }
 });
 
-// API suitmedia
+// API
 const grid = document.getElementById('postsGrid');
 const paginationContainer = document.getElementById('pagination');
 const sortSelect = document.getElementById('sortBy');
@@ -37,9 +40,14 @@ const perPageSelect = document.getElementById('perPage');
 
 let currentPage = 1;
 let currentSortOrder = 'desc';
+let savedState = {
+  page: 1,
+  sortOrder: 'desc',
+  perPage: 10
+};
 
 async function loadPosts(page = 1, sortOrder = 'desc') {
-  const perPage = perPageSelect ? perPageSelect.value : 10;
+  const perPage = perPageSelect ? parseInt(perPageSelect.value) : 10;
   const apiUrl = `https://suitmedia-backend.suitdev.com/api/ideas?page[number]=${page}&page[size]=${perPage}&sort=${sortOrder === 'desc' ? '-published_at' : 'published_at'}`;
 
   try {
@@ -56,8 +64,11 @@ async function loadPosts(page = 1, sortOrder = 'desc') {
 
     const json = await resp.json();
 
-    currentPage = page;
-    currentSortOrder = sortOrder;
+    //simpan state
+    savedState.page = page;
+    savedState.sortOrder = sortOrder;
+    savedState.perPage = perPage;
+    localStorage.setItem('postsPageState', JSON.stringify(savedState));
 
     renderPosts(json.data);
     renderPagination(json.meta.total);
@@ -103,21 +114,19 @@ function renderPosts(posts) {
   });
 }
 
-
-//pagination
 function renderPagination(totalItems) {
   if (!paginationContainer) return;
   paginationContainer.innerHTML = '';
 
-  const perPage = parseInt(perPageSelect ? perPageSelect.value : 10);
+  const perPage = savedState.perPage;
   const totalPages = Math.ceil(totalItems / perPage);
 
   for (let i = 1; i <= totalPages; i++) {
     const btn = document.createElement('button');
     btn.textContent = i;
-    if (i === currentPage) btn.disabled = true;
+    if (i === savedState.page) btn.disabled = true;
     btn.addEventListener('click', () => {
-      loadPosts(i, currentSortOrder);
+      loadPosts(i, savedState.sortOrder);
     });
     paginationContainer.appendChild(btn);
   }
@@ -125,22 +134,30 @@ function renderPagination(totalItems) {
 
 
 window.addEventListener('DOMContentLoaded', () => {
+  const storedState = localStorage.getItem('postsPageState');
+  if (storedState) {
+    savedState = JSON.parse(storedState);
+  }
 
-  loadPosts();
-
-  //sort
   if (sortSelect) {
-    sortSelect.value = 'desc';
+    sortSelect.value = savedState.sortOrder;
     sortSelect.addEventListener('change', () => {
-      loadPosts(1, sortSelect.value);
+      savedState.sortOrder = sortSelect.value;
+      savedState.page = 1; //reset ke halaman 1 saat sortir
+      localStorage.setItem('postsPageState', JSON.stringify(savedState));
+      loadPosts(savedState.page, savedState.sortOrder);
     });
   }
 
-  //page select
   if (perPageSelect) {
-    perPageSelect.value = '10';
+    perPageSelect.value = savedState.perPage;
     perPageSelect.addEventListener('change', () => {
-      loadPosts(1, currentSortOrder);
+      savedState.perPage = parseInt(perPageSelect.value);
+      savedState.page = 1; //reset ke halaman 1 saat ubah page
+      localStorage.setItem('postsPageState', JSON.stringify(savedState));
+      loadPosts(savedState.page, savedState.sortOrder);
     });
   }
+
+  loadPosts(savedState.page, savedState.sortOrder);
 });
